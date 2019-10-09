@@ -1,0 +1,58 @@
+.list{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 500px;
+  max-width: 100%;
+}
+
+.delete-item{
+  width: 30px;
+  padding: 0px !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+}
+
+.delete-item div{
+  margin-right: 0px !important;
+}
+
+.delete-item div i{
+  margin: 2px !important;
+}
+
+.delete-item div .trash{
+  color: #900000;
+}
+
+.item{
+  width: 470px;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-bottom: 1px solid #0011A0;
+  outline: none;
+}
+
+.removed{
+  text-decoration: line-through;
+}
+
+.no-list{
+  width: 400px;
+  text-align: center;
+  padding: 20px;
+  font-size: 15px;
+  color: #D6D6D6;
+}
+
+.add{
+  width: 400px;
+  max-width: 100%;
+}
+
+.add .field-add{
+  width: 100%;
+}
