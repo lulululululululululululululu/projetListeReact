@@ -47,6 +47,10 @@ code {
   justify-content: space-around;
 }
 
+.justify-center{
+  justify-content: center;
+}
+
 .cta{
   text-align: center;
   padding: 10px;
@@ -73,4 +77,21 @@ code {
 
 .field:focus{
   border: 1px solid #0011A0;
+}
+
+.error-field{
+  border: 1px solid #900000;
+}
+
+.error-message{
+  color: #900000;
+  font-style: italic;
+}
+
+.ui.animated.button .hidden.content{
+  margin-top: -3em !important;
+}
+
+.ui.button{
+  cursor: default !important;
 }

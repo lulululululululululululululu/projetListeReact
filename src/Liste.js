@@ -1,19 +1,30 @@
 import React from 'react';
 import Item from './Item';
-import _ from 'lodash';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import DeletedItem from './DeletedItem';
 
 class Liste extends React.Component{
 
   render(){
-    console.log(this.props.items);
     return (
         this.props.items.map(i =>
-            <Item 
-                onClick={this.props.onClick.bind(this)} 
+          {if (!i.isDeleted) {
+            return (
+              <Item 
+                onClickDelete={this.props.onClickDelete.bind(this)} 
+                onClickModify={this.props.onClickModify.bind(this)}
+                onClickShare={this.props.onClickShare.bind(this)}
                 value={i.value} 
                 id={i.key}>
-            </Item>
+              </Item>
+            )
+          }else{
+            return (
+              <DeletedItem
+                onClick={this.props.onClickDeleted.bind(this)}
+                id={i.key}>
+              </DeletedItem>
+            )
+          }}
         )
     );
   }
