@@ -1,4 +1,5 @@
 import React from 'react';
+import * as provider from './providers/provider';
 
 class DeletedItem extends React.Component{
 

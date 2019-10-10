@@ -42,11 +42,14 @@
   background-color: transparent;
   border: none;
   padding: 10px;
-  margin-top: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid #0011A0;
   outline: none;
   word-break: break-word;
+}
+
+.item-list{
+  margin-bottom: 20px;
 }
 
 .item-list .cta-restore-delete-item{
@@ -85,4 +88,10 @@
   cursor: pointer;
   background-color: transparent;
   border: none;
+}
+
+.edit-textarea{
+  min-width: 470px;
+  max-width: 470px;
+  background-color: #EAEAEA;
 }

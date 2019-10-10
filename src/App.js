@@ -1,8 +1,14 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import $ from 'jquery';
 import _ from 'lodash';
+import * as provider from './providers/provider';
 import './css/list.css';
+import './css/header.css';
 import Liste from './Liste';
+import AddToList from './AddToList';
+import Header from './Header';
 
 class App extends React.Component{
 
@@ -15,6 +21,12 @@ class App extends React.Component{
     ],
     errorField: false
   };
+
+  setHeader = () => {
+    return (
+      <Header onClick={this.openSearchBar}></Header>
+    )
+  }
 
   setTitle = () => {
     return (
@@ -32,40 +44,61 @@ class App extends React.Component{
     )
   }
 
-  setList = () => {
+  setList = (list) => {
+    if(list !== 0){
+      return (
+        <div className="list">
+          <Liste 
+            onClickDelete={this.deleteItem}
+            onClickModify={this.modifyItem}
+            onClickShare={this.shareItem}
+            onClickDeleted={this.deleteOrRestoreItem}
+            onClickValidateEdit={this.validateEdit} 
+            onClickCancelEdit={this.cancelEdit} 
+            items={this.state.items}>
+          </Liste>
+        </div>
+      )
+    }
+
     return (
-      <div className="list">
-        <Liste 
-          onClickDelete={this.deleteItem}
-          onClickModify={this.modifyItem}
-          onClickShare={this.shareItem}
-          onClickDeleted={this.deleteOrRestoreItem} 
-          items={this.state.items}>
-        </Liste>
-      </div>
+      this.setNoList()
     )
   }
 
   setAddToList = () => {
     return (
-      <div className="add flex column align-center" id="block-add-to-list">
-        <textarea
-          type="text"
-          className="field-add field"
-          placeholder="Que voulez vous ajouter à la liste ?">
-        </textarea>
-        <div className="error-message"></div>
-        <input 
-          type="button"
-          className="cta"
-          value="Ajouter"
-          onClick={this.addInList}/>
-      </div>
+      <AddToList onClick={this.addInList} />
     )
+  }
+
+  openSearchBar = () => {
+    alert("ok");
+  }
+
+  validateEdit = async(data) => {
+    let element = $("#textarea-edit-" + data.target.dataset.item);
+    let value = element.val();
+    if(!this.checkField(value)){
+      await this.error(element, "field");
+      element.addClass("error-field");
+      return;
+    }
+    var _state = Object.assign({}, this.state);
+    _state['items'][data.target.dataset.item]["isInEdition"] = false;
+    _state['items'][data.target.dataset.item]["value"] = $("#textarea-edit-" + data.target.dataset.item).val();
+    this.setState(_state);
+  }
+
+  cancelEdit = (data) => {
+    var _state = Object.assign({}, this.state);
+    _state['items'][data.target.dataset.item]["isInEdition"] = false;
+    this.setState(_state);
   }
 
   deleteOrRestoreItem = (data) => {
     var _state = Object.assign({}, this.state);
+    _state['items'][data.target.id]["isInEdition"] = false;
     switch(data.target.dataset.type){
       case "delete":
         _state['items'].splice(data.target.id, 1);
@@ -91,8 +124,8 @@ class App extends React.Component{
   }
 
   checkField = (value) => {
-    let regex = /((<script>)|(<\/script>))/g;
-    if(value.match(regex)){
+    let regex = provider.providers.const.FIELD_REGEX_CHECK_INVALID_CARACTER;
+    if(value.match(regex) || value.replace(provider.providers.const.FIELD_REGEX_CHECK_WHITE_SPACE, "") === "" || value === ""){
       return false;
     }
 
@@ -100,22 +133,21 @@ class App extends React.Component{
   }
 
   modifyItem = (data) => {
-
+    let _state = Object.assign({}, this.state);
+    _state['items'][data.target.id]['isInEdition'] = true;
+    this.setState(_state);
+    console.log(this.state);
   }
 
   shareItem = (data) => {
     
   }
 
-  error = (element, elementType, errorType) => {
+  error = (element, elementType, errorType = null) => {
     let _state = Object.assign({}, this.state);
     if(elementType === "field"){
       _state['errorField'] = true;
-      if(errorType === "empty"){
-       $("#" + element.parent().attr("id") + " .error-message").html("Ce champ ne doit pas être vide")
-      }else if(errorType = "invalid"){
-        $("#" + element.parent().attr("id") + " .error-message").html("Ce champ contient des caractères invalides")
-      }
+      $("#" + element.parent().attr("id") + " .error-message").html("Attention ce champ est vide ou contiens des caractères invalides")
     }
     this.setState(_state);
   }
@@ -123,10 +155,8 @@ class App extends React.Component{
   addInList = async() => {
     let element = $(".field-add");
     let value = element.val();
-    if(value === ""){
-      await this.error(element, "field", "empty");
-    }else if(!this.checkField(value)){
-      await this.error(element, "field", "invalid");
+    if(!this.checkField(value)){
+      await this.error(element, "field");
     }else{
       $("#" + element.parent().attr("id") + " .error-message").html("");
       element.removeClass("field-error");
@@ -141,33 +171,24 @@ class App extends React.Component{
       element.removeClass("error-field");
     }
     let _state = Object.assign({}, this.state);
-    _state['items'].push({key: this.state.items.length, value: value, isDeleted: false});
+    _state['items'].push({key: this.state.items.length, value: value, isDeleted: false, isInEdition: false});
     _state['errorField'] = false;
     this.setState(_state);
   }
   
   render(){
-    if(this.state.items.length === 0){
-      return(
-        <div>
+    return(
+      <div>
+        {this.setHeader()}
+        <div id="main-container">
           {this.setTitle()}
           <div className="block-list flex space-around">
             {this.setAddToList()}
-            {this.setNoList()}
+            {this.setList(this.state.items.length)}
           </div>
         </div>
-      )
-    }else{
-      return (
-        <div>
-          {this.setTitle()}
-          <div className="bloc-list flex space-around">
-            {this.setAddToList()}
-            {this.setList()}
-          </div>
-        </div>
-      );
-    }
+      </div>
+    )
   }
 }
 

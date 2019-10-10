@@ -1,6 +1,6 @@
 *{
-  box-sizing: border-box;
-  outline: none;
+  box-sizing: border-box !important;
+  outline: none !important;
 }
 
 body {
@@ -13,8 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root{
-  position: relative;
+#main-container{
   width: 1400px;
   max-width: 100%;
   margin: auto;
@@ -47,6 +46,10 @@ code {
   justify-content: space-around;
 }
 
+.space-between{
+  justify-content: space-between;
+}
+
 .justify-center{
   justify-content: center;
 }
@@ -64,8 +67,26 @@ code {
   transition: background-color 0.2s;
 }
 
-.cta:hover{
+.secondary-cta{
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  font-weight: bold;
+  margin: 5px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #0011A0;
+  color: #0011A0;
+  transition: background-color 0.2s;
+}
+
+.cta:hover, .secondary-cta:hover{
   background-color: rgba(0, 17, 160, 0.1);
+}
+
+.secondary-cta-colors{
+  color: #CDCDCD !important;
+  border-color: #CDCDCD !important;
 }
 
 .field{
@@ -80,10 +101,12 @@ code {
 }
 
 .error-field{
-  border: 1px solid #900000;
+  border: 1px solid #900000 !important;
 }
 
 .error-message{
+  text-align: center;
+  width: 100%;
   color: #900000;
   font-style: italic;
 }
