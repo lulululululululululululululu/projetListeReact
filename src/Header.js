@@ -13,9 +13,12 @@ class Header extends React.Component{
                     <div className="logo" style={{backgroundImage: 'url(' + provider.providers.const.LOGO_PATH + ')'}}></div>
                 </a>
                 <div className="header-menu flex align-center">
-                    <button className="cta-search" onClick={this.props.onClick}>
-                        <Icon name="search"></Icon>
-                    </button>
+                    <div className="bloc-search-bar-header flex" id="bloc-search-bar">
+                        <input type="text" className="search-bar" id="search-bar-header" placeholder="Rechercher..."></input>
+                        <button className="cta-search" id="cta-search-header" onClick={this.props.onClick}>
+                            <Icon name="search"></Icon>
+                        </button>
+                    </div>
                     <a href={provider.providers.link.MY_LIST} className="link-menu-header">
                         Ma liste
                     </a>

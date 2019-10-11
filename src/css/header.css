@@ -38,9 +38,23 @@
     border: none;
     color: #CDCDCD;
     transition: color 0.2s, transform 0.2s;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .cta-search:hover{
     transform: scale(1.05);
     color: #0011A0; 
+}
+
+.search-bar{
+    text-indent: 5px;
+    width: 200px;
+    border: none;
+    border-bottom: 1px solid #CDCDCD;
+    transition: border-bottom 0.2s;
+}
+
+.search-bar:focus{
+    border-bottom: 1px solid #0011A0;
 }

@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import $ from 'jquery';
 import _ from 'lodash';
+import Moment from 'react-moment';
+import 'moment-timezone';
 import * as provider from './providers/provider';
 import './css/list.css';
 import './css/header.css';
@@ -19,12 +21,13 @@ class App extends React.Component{
   state = {
     items: [
     ],
-    errorField: false
+    errorField: false,
+    searchBarHeaderOpen: false
   };
 
   setHeader = () => {
     return (
-      <Header onClick={this.openSearchBar}></Header>
+      <Header onClick={this.validateSearchInSearchBar} ></Header>
     )
   }
 
@@ -55,7 +58,8 @@ class App extends React.Component{
             onClickDeleted={this.deleteOrRestoreItem}
             onClickValidateEdit={this.validateEdit} 
             onClickCancelEdit={this.cancelEdit} 
-            items={this.state.items}>
+            items={this.state.items}
+            date={this.state.creationDate}>
           </Liste>
         </div>
       )
@@ -72,8 +76,8 @@ class App extends React.Component{
     )
   }
 
-  openSearchBar = () => {
-    alert("ok");
+  validateSearchInSearchBar = (value) => {
+    alert(value);
   }
 
   validateEdit = async(data) => {
@@ -171,7 +175,7 @@ class App extends React.Component{
       element.removeClass("error-field");
     }
     let _state = Object.assign({}, this.state);
-    _state['items'].push({key: this.state.items.length, value: value, isDeleted: false, isInEdition: false});
+    _state['items'].push({key: this.state.items.length, value: value, isDeleted: false, isInEdition: false, creationDate: new Date()});
     _state['errorField'] = false;
     this.setState(_state);
   }

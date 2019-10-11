@@ -1,5 +1,7 @@
 import React from 'react';
 import * as provider from './providers/provider';
+import Moment from 'react-moment';
+import 'moment-timezone';
 import Item from './Item';
 import DeletedItem from './DeletedItem';
 import ItemInEdition from './ItemInEdition';
@@ -16,7 +18,8 @@ class Liste extends React.Component{
                 onClickModify={this.props.onClickModify.bind(this)}
                 onClickShare={this.props.onClickShare.bind(this)}
                 value={i.value} 
-                id={i.key}>
+                id={i.key}
+                date={this.props.date}>
               </Item>
             )
           }else if(!i.isDeleted && i.isInEdition){
