@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import * as provider from './providers/provider';
 import { Icon, Button } from 'semantic-ui-react';
 
@@ -19,18 +20,18 @@ class Header extends React.Component{
                             <Icon name="search"></Icon>
                         </button>
                     </div>
-                    <a href={provider.providers.link.MY_LIST} className="link-menu-header">
+                    <Link to={provider.providers.link.MY_LIST} className="link-menu-header">
                         Ma liste
-                    </a>
-                    <a href={provider.providers.link.MY_MEDIAS} className="link-menu-header">
+                    </Link>
+                    <Link to={provider.providers.link.MY_MEDIAS} className="link-menu-header">
                         Mes médias
-                    </a>
-                    <a href={provider.providers.link.FRIENDS} className="link-menu-header">
+                    </Link>
+                    <Link to={provider.providers.link.FRIENDS} className="link-menu-header">
                         Amis
-                    </a>
-                    <a href={provider.providers.link.MESSAGES} className="link-menu-header">
+                    </Link>
+                    <Link to={provider.providers.link.MESSAGES} className="link-menu-header">
                         Messagerie
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

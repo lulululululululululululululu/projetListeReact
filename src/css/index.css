@@ -119,10 +119,36 @@ code {
   cursor: default !important;
 }
 
-.width-0{
+.w-0{
   width: 0px !important;
 }
 
-.width-200{
+.w-200{
   width: 200px;
+}
+
+.t-left{
+  text-align: left;
+}
+
+.t-center{
+  text-align: center;
+}
+
+.t-right{
+  text-align: right;
+}
+
+.t-justify{
+  text-align: justify;
+}
+
+.deleted{
+  color: #CDCDCD;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.removed{
+  display: none;
 }

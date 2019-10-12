@@ -19,6 +19,9 @@ class Item extends React.Component{
             onClickShare={this.props.onClickShare}
             onClickDelete={this.props.onClickDelete}>
         </MenuListOptions>
+        <div className="creation-date-item t-right deleted">
+          {this.props.date}
+        </div>
       </div>
     );
   }

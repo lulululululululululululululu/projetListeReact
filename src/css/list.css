@@ -1,7 +1,4 @@
 .list{
-  display: flex;
-  flex-direction: column;
-  text-align: center;
   width: 500px;
   max-width: 100%;
 }
@@ -61,10 +58,6 @@
   color: #CDCDCD;
 }
 
-.removed{
-  display: none;
-}
-
 .no-list{
   width: 400px;
   text-align: center;
@@ -94,4 +87,12 @@
   min-width: 470px;
   max-width: 470px;
   background-color: #EAEAEA;
+}
+
+.creation-date-item{
+  width: calc(100% - 30px);
+}
+
+.creation-date-item-deleted{
+  width: 100%;
 }

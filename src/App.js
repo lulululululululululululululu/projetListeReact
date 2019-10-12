@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import $ from 'jquery';
@@ -11,6 +16,7 @@ import './css/header.css';
 import Liste from './Liste';
 import AddToList from './AddToList';
 import Header from './Header';
+const moment = require('moment');
 
 class App extends React.Component{
 
@@ -18,6 +24,8 @@ class App extends React.Component{
     super(props);
   }
   
+  
+
   state = {
     items: [
     ],
@@ -31,10 +39,10 @@ class App extends React.Component{
     )
   }
 
-  setTitle = () => {
+  setTitle = (title) => {
     return (
       <div className="title">
-        <h1>Ma liste</h1>
+        <h1>{title}</h1>
       </div>
     )
   }
@@ -58,8 +66,7 @@ class App extends React.Component{
             onClickDeleted={this.deleteOrRestoreItem}
             onClickValidateEdit={this.validateEdit} 
             onClickCancelEdit={this.cancelEdit} 
-            items={this.state.items}
-            date={this.state.creationDate}>
+            items={this.state.items}>
           </Liste>
         </div>
       )
@@ -174,24 +181,41 @@ class App extends React.Component{
     }else{
       element.removeClass("error-field");
     }
+    let date = moment(new Date()).format(provider.providers.const.DATETIME_FORMAT);
     let _state = Object.assign({}, this.state);
-    _state['items'].push({key: this.state.items.length, value: value, isDeleted: false, isInEdition: false, creationDate: new Date()});
+    _state['items'].push({key: this.state.items.length, value: value, isDeleted: false, isInEdition: false, creationDate: date});
     _state['errorField'] = false;
     this.setState(_state);
+    console.log(this.state);
   }
   
   render(){
     return(
-      <div>
-        {this.setHeader()}
-        <div id="main-container">
-          {this.setTitle()}
-          <div className="block-list flex space-around">
-            {this.setAddToList()}
-            {this.setList(this.state.items.length)}
+      <Router>
+        <div>
+          {this.setHeader()}
+          <div id="main-container">
+            <Switch>
+              <Route path={provider.providers.link.MY_LIST}>
+                {this.setTitle("Ma liste")}
+                <div className="block-list flex space-around">
+                  {this.setAddToList()}
+                  {this.setList(this.state.items.length)}
+                </div>
+              </Route>
+              <Route path={provider.providers.link.MY_MEDIAS}>
+                {this.setTitle("Mes médias")}
+              </Route>
+              <Route path={provider.providers.link.FRIENDS}>
+                {this.setTitle("Amis")}
+              </Route>
+              <Route path={provider.providers.link.MESSAGES}>
+                {this.setTitle("Messages")}
+              </Route>
+            </Switch>
           </div>
         </div>
-      </div>
+      </Router>
     )
   }
 }

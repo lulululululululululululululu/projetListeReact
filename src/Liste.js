@@ -19,7 +19,7 @@ class Liste extends React.Component{
                 onClickShare={this.props.onClickShare.bind(this)}
                 value={i.value} 
                 id={i.key}
-                date={this.props.date}>
+                date={i.creationDate}>
               </Item>
             )
           }else if(!i.isDeleted && i.isInEdition){
@@ -38,7 +38,9 @@ class Liste extends React.Component{
             return (
               <DeletedItem
                 onClick={this.props.onClickDeleted.bind(this)}
-                id={i.key}>
+                id={i.key}
+                value={i.value}
+                date={i.creationDate}>
               </DeletedItem>
             )
           }}
