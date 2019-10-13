@@ -1,15 +1,53 @@
+import SignIn from '../SignIn';
+import SignUp from '../SignUp';
+import MyList from '../MyList';
+import MyMedias from '../MyMedias';
+import Friends from '../Friends';
+import Messages from '../Messages';
+
 export const providers = {
     const : {
-        HOME_PATH : "/",
         LOGO_PATH : "/assets/img/logos/logo.png",
         FIELD_REGEX_CHECK_INVALID_CARACTER : /((<script>)|(<\/script>))/g,
         FIELD_REGEX_CHECK_WHITE_SPACE : /\s/g,
         DATETIME_FORMAT : "DD/MM/YYYY HH:mm"
     },
     link : {
+        SIGN_IN: "/sign_in",
+        SIGN_UP: "/sign_up",
         MY_LIST : "/my_list",
         MY_MEDIAS : "/my_medias",
         FRIENDS : "/friends",
         MESSAGES : "/messages"
+    },
+    routes : [
+        {
+            path : '/sign_in',
+            Component : SignIn
+        },
+        {
+            path : '/sign_up',
+            Component : SignUp
+        },
+        {
+            path : '/my_list',
+            Component : MyList
+        },
+        {
+            path : '/my_medias',
+            Component : MyMedias
+        },
+        {
+            path : '/friends',
+            Component : Friends
+        },
+        {
+            path : '/messages',
+            Component : Messages
+        },
+    ],
+    redux : {
+        ERROR_FIELD_TRUE : "errorFieldTrue",
+        ERROR_FIELD_FALSE : "errorFieldFalse",
     }
 }

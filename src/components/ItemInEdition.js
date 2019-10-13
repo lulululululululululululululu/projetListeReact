@@ -1,5 +1,5 @@
 import React from 'react';
-import * as provider from './providers/provider';
+import * as provider from '../providers/provider';
 import MenuListOptions from './MenuListOptions';
 import { Icon } from 'semantic-ui-react'
 

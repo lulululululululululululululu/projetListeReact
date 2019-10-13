@@ -1,5 +1,5 @@
 import React from 'react';
-import * as provider from './providers/provider';
+import * as provider from '../providers/provider';
 import { Button, Icon } from 'semantic-ui-react'
 
 class MenuListOptions extends React.Component{

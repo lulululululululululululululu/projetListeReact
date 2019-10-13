@@ -1,22 +1,25 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import * as provider from './providers/provider';
+import * as provider from '../providers/provider';
 import { Icon, Button } from 'semantic-ui-react';
 
 class Header extends React.Component{
 
+validateSearchInSearchBar = (value) => {
+    alert(value);
+}
+
   render(){
-    console.log(provider);
     return (
         <div className="header">
             <div className="header-container flex space-between">
-                <a href={provider.providers.const.HOME_PATH} className="href-logo" >
+                <Link to={provider.providers.link.MY_LIST} className="href-logo" >
                     <div className="logo" style={{backgroundImage: 'url(' + provider.providers.const.LOGO_PATH + ')'}}></div>
-                </a>
+                </Link>
                 <div className="header-menu flex align-center">
                     <div className="bloc-search-bar-header flex" id="bloc-search-bar">
                         <input type="text" className="search-bar" id="search-bar-header" placeholder="Rechercher..."></input>
-                        <button className="cta-search" id="cta-search-header" onClick={this.props.onClick}>
+                        <button className="cta-search" id="cta-search-header" onClick={this.validateSearchInSearchBar}>
                             <Icon name="search"></Icon>
                         </button>
                     </div>

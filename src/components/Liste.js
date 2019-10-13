@@ -1,5 +1,5 @@
 import React from 'react';
-import * as provider from './providers/provider';
+import * as provider from '../providers/provider';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import Item from './Item';
