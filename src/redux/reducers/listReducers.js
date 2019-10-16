@@ -7,7 +7,7 @@ const initialState = {
     searchBarHeaderOpen: false
 };
 
-export default function errorFieldState(state = initialState, action) {
+export default function listReducer(state = initialState, action) {
     switch (action.type) {
       case provider.providers.redux.ERROR_FIELD_FALSE:
         return Object.assign({}, state, {

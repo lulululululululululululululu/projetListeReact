@@ -1,10 +1,6 @@
-import { createStore } from 'redux';
-import errorFieldState from './reducers/listReducers';
+import {
+  createStore
+} from 'redux';
+import listReducer from './reducers/listReducers';
 
-const configureStore = () => {
-  return createStore(
-    errorFieldState,
-  );
-};
-
-export default configureStore;
+export default createStore(listReducer);
