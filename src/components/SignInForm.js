@@ -6,8 +6,8 @@ class SignInForm extends React.Component{
 
     render(){
       return (
-          <div className="sign-in-form flex column">
-            <form className="flex column align-center" >
+          <div className="sign-in-up-form flex column">
+            <form className="flex column align-center" id="form-sign-in">
                 <input type="text"
                     placeholder="Nom d'utilisateur">
                 </input>

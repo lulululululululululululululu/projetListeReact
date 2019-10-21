@@ -52,7 +52,7 @@ class App extends React.Component{
   render(){
     return(
       <Router>
-        <Header onClick={this.validateSearchInSearchBar} />
+        <Header onClick={this.validateSearchInSearchBar}/>
         <div id="main-container">
           <AnimatedSwitch
             atEnter={this.bounceTransition.atEnter}
@@ -61,7 +61,7 @@ class App extends React.Component{
             mapStyles={this.mapStyles}
             className="switch-wrapper">
             {provider.providers.routes.map(({ path, Component }) => (
-              <Route path={path} >
+              <Route path={path} key={path} >
                 <Component />
               </Route>
             ))}

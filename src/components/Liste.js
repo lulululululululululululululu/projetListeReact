@@ -14,6 +14,7 @@ class Liste extends React.Component{
           {if (!i.isDeleted && !i.isInEdition) {
             return (
               <Item 
+                key={i.key}
                 onClickDelete={this.props.onClickDelete.bind(this)} 
                 onClickModify={this.props.onClickModify.bind(this)}
                 onClickShare={this.props.onClickShare.bind(this)}
@@ -31,7 +32,8 @@ class Liste extends React.Component{
                 onClickValidateEdit={this.props.onClickValidateEdit.bind(this)}
                 onClickCancelEdit={this.props.onClickCancelEdit.bind(this)}
                 value={i.value} 
-                id={i.key}>
+                id={i.key}
+                key={i.key}>
               </ItemInEdition>
             )
           }else{
@@ -40,7 +42,8 @@ class Liste extends React.Component{
                 onClick={this.props.onClickDeleted.bind(this)}
                 id={i.key}
                 value={i.value}
-                date={i.creationDate}>
+                date={i.creationDate}
+                key={i.key}>
               </DeletedItem>
             )
           }}

@@ -47,7 +47,15 @@ export const providers = {
         },
     ],
     redux : {
-        ERROR_FIELD_TRUE : "errorFieldTrue",
-        ERROR_FIELD_FALSE : "errorFieldFalse",
+        ERROR_FIELD : "errorField",
+        ADD_IN_LIST : "addInList",
+        CHANGE_ITEM_TYPE_EDITION : "changeItemTypeEdition",
+        CHANGE_ITEM_IS_DELETED : "changeItemIsDeleted",
+        CHANGE_ITEM_VALUE : "changeItemValue",
+        SPLICE_LIST : "spliceList"
+    },
+    submit : {
+        SIGN_UP : "/back/?path=sign_up_form_submitted",
+        SIGN_IN : "/back/?path=sign_in_form_submitted"
     }
 }

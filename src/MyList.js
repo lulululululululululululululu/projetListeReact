@@ -22,37 +22,57 @@ class MyList extends React.Component {
   validateEdit = async (data) => {
     let element = $("#textarea-edit-" + data.target.dataset.item);
     let value = element.val();
+    let id = data.target.dataset.item;
     if (!this.checkField(value)) {
       await this.error(element, "field");
       element.addClass("error-field");
       return;
     }
-    var _state = Object.assign({}, this.state);
-    _state['items'][data.target.dataset.item]["isInEdition"] = false;
-    _state['items'][data.target.dataset.item]["value"] = $("#textarea-edit-" + data.target.dataset.item).val();
-    this.setState(_state);
+    await this.props.dispatch({
+      type: provider.providers.redux.CHANGE_ITEM_TYPE_EDITION,
+      itemIndex: id,
+      isInEdition: false
+    })
+    await this.props.dispatch({
+      type: provider.providers.redux.CHANGE_ITEM_VALUE,
+      itemIndex: id,
+      itemValue: $("#textarea-edit-" + id).val()
+    })
+    this.forceUpdate();
   }
 
-  cancelEdit = (data) => {
-    var _state = Object.assign({}, this.state);
-    _state['items'][data.target.dataset.item]["isInEdition"] = false;
-    this.setState(_state);
+  cancelEdit = async(data) => {
+    await this.props.dispatch({
+      type: provider.providers.redux.CHANGE_ITEM_TYPE_EDITION,
+      itemIndex: data.target.dataset.item,
+      isInEdition: false
+    })
+    this.forceUpdate();
   }
 
-  deleteOrRestoreItem = (data) => {
-    var _state = Object.assign({}, this.state);
-    _state['items'][data.target.id]["isInEdition"] = false;
-    switch (data.target.dataset.type) {
+  deleteOrRestoreItem = async(data) => {
+    let type = data.target.dataset.type;
+    let id = data.target.id
+    await this.props.dispatch({
+      type: provider.providers.redux.CHANGE_ITEM_TYPE_EDITION,
+      itemIndex: data.target.id,
+      isInEdition: false
+    })
+    switch (type) {
       case "delete":
-        _state['items'].splice(data.target.id, 1);
-        _.forEach(_state['items'], function (value, key) {
-          _state['items'][key]["key"] = key;
+        await this.props.dispatch({
+          type: provider.providers.redux.SPLICE_LIST,
+          itemId: id
         })
-        this.setState(_state);
+        this.forceUpdate();
         break;
       case "restore":
-        _state['items'][data.target.id]["isDeleted"] = false;
-        this.setState(_state);
+        await this.props.dispatch({
+          type: provider.providers.redux.CHANGE_ITEM_IS_DELETED,
+          isDeletedValue: false,
+          itemIndex: id
+        })
+        this.forceUpdate();
         break;
       default:
         console.log("error");
@@ -61,9 +81,12 @@ class MyList extends React.Component {
   }
 
   deleteItem = async (data) => {
-    let _state = Object.assign({}, this.state);
-    _state['items'][data.target.id]['isDeleted'] = true;
-    await this.setState(_state);
+    await this.props.dispatch({
+      type: provider.providers.redux.CHANGE_ITEM_IS_DELETED,
+      isDeletedValue: true,
+      itemIndex: data.target.id
+    })
+    this.forceUpdate();
   }
 
   checkField = (value) => {
@@ -75,11 +98,13 @@ class MyList extends React.Component {
     return true;
   }
 
-  modifyItem = (data) => {
-    let _state = Object.assign({}, this.state);
-    _state['items'][data.target.id]['isInEdition'] = true;
-    this.setState(_state);
-    console.log(this.state);
+  modifyItem = async(data) => {
+    await this.props.dispatch({
+      type: provider.providers.redux.CHANGE_ITEM_TYPE_EDITION,
+      itemIndex: data.target.id,
+      isInEdition: true
+    })
+    this.forceUpdate()
   }
 
   shareItem = (data) => {
@@ -89,16 +114,15 @@ class MyList extends React.Component {
   error = async(element, elementType, errorType = null) => {
     if (elementType === "field") {
       await this.props.dispatch({
-        type: provider.providers.redux.ERROR_FIELD_TRUE,
+        type: provider.providers.redux.ERROR_FIELD,
         errorField: true
       })
-      console.log(this.props.errorField)
       $("#" + element.parent().attr("id") + " .error-message").html("Attention ce champ est vide ou contiens des caractères invalides")
     }
   }
 
-  setList = (list) => {
-    if (list !== 0) {
+  setList = () => {
+    if (this.props.items.length !== 0) {
       return (
         <div className="list">
           <Liste
@@ -108,7 +132,7 @@ class MyList extends React.Component {
             onClickDeleted={this.deleteOrRestoreItem}
             onClickValidateEdit={this.validateEdit}
             onClickCancelEdit={this.cancelEdit}
-            items={this.state.items}>
+            items={this.props.items}>
           </Liste>
         </div>
       )
@@ -120,7 +144,6 @@ class MyList extends React.Component {
   }
 
   addInList = async () => {
-    console.log("aaaaa = " + this.props.store);
     let element = $(".field-add");
     let value = element.val();
     if (!this.checkField(value)) {
@@ -129,10 +152,9 @@ class MyList extends React.Component {
       $("#" + element.parent().attr("id") + " .error-message").html("");
       element.removeClass("field-error");
       await this.props.dispatch({
-        type: provider.providers.redux.ERROR_FIELD_FALSE,
+        type: provider.providers.redux.ERROR_FIELD,
         errorField: false
       })
-      console.log(this.props.errorField)
     }
     if (this.props.errorField) {
       element.addClass("error-field");
@@ -141,10 +163,13 @@ class MyList extends React.Component {
       element.removeClass("error-field");
     }
     let date = moment(new Date()).format(provider.providers.const.DATETIME_FORMAT);
-    /*let _state = Object.assign({}, this.state);
-    _state['items'].push({ key: this.state.items.length, value: value, isDeleted: false, isInEdition: false, creationDate: date });
-    _state['errorField'] = false;
-    this.setState(_state);*/
+    let newItem = this.props.items;
+    newItem.push({ key: newItem.length, value: value, isDeleted: false, isInEdition: false, creationDate: date })
+    await this.props.dispatch({
+      type: provider.providers.redux.ADD_IN_LIST,
+      items: newItem
+    })
+    this.forceUpdate()
   }
 
   render() {
@@ -153,6 +178,7 @@ class MyList extends React.Component {
         <Title value="Ma liste" />
         <div className="block-list flex space-around">
           <AddToList onClick={this.addInList} />
+          {this.setList()}
         </div>
       </div>
     )
@@ -161,7 +187,8 @@ class MyList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    errorField: state.errorField
+    errorField: state.errorField,
+    items: state.items
   }
 }
 

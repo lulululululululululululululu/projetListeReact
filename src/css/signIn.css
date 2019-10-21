@@ -1,16 +1,16 @@
-.sign-in-form{
+.sign-in-up-form{
     text-align: center;
     width: 400px;
     margin: auto;
 }
 
-.sign-in-form form{
+.sign-in-up-form form{
     width: 100%;
     margin-top: 50px;
     margin-bottom: 50px;
 }
 
-.sign-in-form hr{
+.sign-in-up-form hr{
     height: 1px;
     width: 100%;
     background-color: #CDCDCD;
@@ -21,7 +21,7 @@
     color: #CDCDCD;
 }
 
-.sign-in-form form input{
+.sign-in-up-form form input{
     width: 100%;
     height: 50px;
     margin-top: 20px;
@@ -32,7 +32,7 @@
     transition: border-bottom 0.2s;
 }
 
-.sign-in-form form input:focus{
+.sign-in-up-form form input:focus{
     border-bottom: 1px solid #0011A0;
 }
 
