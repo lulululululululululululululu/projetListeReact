@@ -10,20 +10,24 @@ class SignUpForm extends React.Component{
         username: "",
         password: "",
         confirmPassword: "",
+        keepConnected: false,
         error: false
     }
 
-    handleSubmit = async(event) => {
-        event.preventDefault();
+    onChangeState = () => {
         this.setState({
             username: $("#username").val(),
             mail: $("#mail").val(),
             password: $("#password").val(),
             confirmPassword: $("#confirm-password").val()
         })
+    }
+
+    handleSubmit = async(event) => {
+        event.preventDefault();
         await $.ajax({
-            url: provider.providers.submit.SIGN_UP,
-            type: "GET",
+            url: provider.providers.const.API_PATH + provider.providers.submit.SIGN_UP,
+            type: "POST",
             data: this.state,
             success: async function(data){
                 console.log(data);
@@ -39,22 +43,26 @@ class SignUpForm extends React.Component{
     render(){
       return (
           <div className="sign-in-up-form flex column">
-            <form className="flex column align-center" id="form-sign-up" onSubmit={this.handleSubmit}>
+            <form method="post" className="flex column align-center" id="form-sign-up" onSubmit={this.handleSubmit}>
                 <input type="text"
                     id="username"
-                    placeholder="Nom d'utilisateur">
+                    placeholder="Nom d'utilisateur"
+                    onChange={this.onChangeState}>
                 </input>
                 <input type="mail"
                     id="mail"
-                    placeholder="E-mail">
+                    placeholder="E-mail"
+                    onChange={this.onChangeState}>
                 </input>
                 <input type="password"
                     id="password"
-                    placeholder="Mot de passe">
+                    placeholder="Mot de passe"
+                    onChange={this.onChangeState}>
                 </input>
                 <input type="password"
                     id="confirm-password"
-                    placeholder="Confirmer le mot de passe">
+                    placeholder="Confirmer le mot de passe"
+                    onChange={this.onChangeState}>
                 </input>
                 <input className="cta" type="submit"
                     value="S'inscrire">

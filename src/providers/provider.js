@@ -10,7 +10,8 @@ export const providers = {
         LOGO_PATH : "/assets/img/logos/logo.png",
         FIELD_REGEX_CHECK_INVALID_CARACTER : /((<script>)|(<\/script>))/g,
         FIELD_REGEX_CHECK_WHITE_SPACE : /\s/g,
-        DATETIME_FORMAT : "DD/MM/YYYY HH:mm"
+        DATETIME_FORMAT : "DD/MM/YYYY HH:mm",
+        API_PATH : "http://localhost:8000/backReactlist/api"
     },
     link : {
         SIGN_IN: "/sign_in",
@@ -55,7 +56,7 @@ export const providers = {
         SPLICE_LIST : "spliceList"
     },
     submit : {
-        SIGN_UP : "/back/?path=sign_up_form_submitted",
-        SIGN_IN : "/back/?path=sign_in_form_submitted"
+        SIGN_UP : "/?action=SignUpFormSubmitted",
+        SIGN_IN : "/?action=SignInFormSubmitted"
     }
 }
