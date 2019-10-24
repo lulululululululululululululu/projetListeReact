@@ -2,6 +2,7 @@ import React from 'react'
 import * as provider from '../providers/provider';
 import { Link } from "react-router-dom";
 import $ from 'jquery';
+import ReCAPTCHA from "react-google-recaptcha";
 
 class SignUpForm extends React.Component{
 
@@ -10,7 +11,6 @@ class SignUpForm extends React.Component{
         username: "",
         password: "",
         confirmPassword: "",
-        keepConnected: false,
         error: false
     }
 
@@ -23,6 +23,28 @@ class SignUpForm extends React.Component{
         })
     }
 
+    checkCaptcha = (value) => {
+        $.ajax({
+            url: provider.providers.link.CAPTCHA_CHECK,
+            type: "POST",
+            beforeSend: function(request) {
+                request.setRequestHeader("Access-Control-Allow-Origin", provider.providers.const.SITE_PATH);
+            },
+            data: {
+                secret: provider.providers.const.CAPTCHA_SITE_KEY,
+                response: value
+            },
+            success: async function(data){
+                console.log(data);
+                //await this.setState({error: false})
+            },
+            error: async function(data){
+                console.log(data);
+                //await this.setState({error: true})
+            }
+        });
+    }
+
     handleSubmit = async(event) => {
         event.preventDefault();
         await $.ajax({
@@ -30,6 +52,7 @@ class SignUpForm extends React.Component{
             type: "POST",
             data: this.state,
             success: async function(data){
+                //let json = JSON.parse(data);
                 console.log(data);
                 //await this.setState({error: false})
             },
@@ -64,6 +87,10 @@ class SignUpForm extends React.Component{
                     placeholder="Confirmer le mot de passe"
                     onChange={this.onChangeState}>
                 </input>
+                <ReCAPTCHA
+                    sitekey={provider.providers.const.CAPTCHA_SITE_KEY}
+                    onChange={this.checkCaptcha}
+                />
                 <input className="cta" type="submit"
                     value="S'inscrire">
                 </input>

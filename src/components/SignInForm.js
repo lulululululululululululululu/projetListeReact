@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import * as provider from '../providers/provider';
 import { Link } from "react-router-dom";
 

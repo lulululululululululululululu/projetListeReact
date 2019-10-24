@@ -4,14 +4,17 @@ import MyList from '../MyList';
 import MyMedias from '../MyMedias';
 import Friends from '../Friends';
 import Messages from '../Messages';
+import SignUpValidated from '../SignUpValidated';
 
 export const providers = {
     const : {
+        SITE_PATH : "http://localhost:3000/",
         LOGO_PATH : "/assets/img/logos/logo.png",
         FIELD_REGEX_CHECK_INVALID_CARACTER : /((<script>)|(<\/script>))/g,
         FIELD_REGEX_CHECK_WHITE_SPACE : /\s/g,
         DATETIME_FORMAT : "DD/MM/YYYY HH:mm",
-        API_PATH : "http://localhost:8000/backReactlist/api"
+        API_PATH : "http://localhost:8000/backReactlist/api",
+        CAPTCHA_SITE_KEY : "6Le6QL8UAAAAAFu6Sh31eBay2fv1s-CX4smkixcU"
     },
     link : {
         SIGN_IN: "/sign_in",
@@ -19,7 +22,8 @@ export const providers = {
         MY_LIST : "/my_list",
         MY_MEDIAS : "/my_medias",
         FRIENDS : "/friends",
-        MESSAGES : "/messages"
+        MESSAGES : "/messages",
+        CAPTCHA_CHECK : "https://www.google.com/recaptcha/api/siteverify"
     },
     routes : [
         {
@@ -46,6 +50,10 @@ export const providers = {
             path : '/messages',
             Component : Messages
         },
+        {
+            path : '/thankyouforsignup',
+            Component : SignUpValidated
+        }
     ],
     redux : {
         ERROR_FIELD : "errorField",
