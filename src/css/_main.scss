@@ -1,0 +1,175 @@
+*{
+  box-sizing: border-box !important;
+  outline: none !important;
+}
+
+.switch-wrapper {
+  position: relative;
+}
+ 
+.switch-wrapper > div {
+  position: absolute;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#main-container{
+  width: 1400px;
+  max-width: 100%;
+  margin: auto;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.enclosing-tag{
+  width: 100%;
+}
+
+.title{
+  text-align: center;
+  margin: 30px;
+}
+
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column{
+  flex-direction: column;
+}
+
+.align-center{
+  align-items: center;
+}
+
+.space-around{
+  justify-content: space-around;
+}
+
+.space-between{
+  justify-content: space-between;
+}
+
+.justify-center{
+  justify-content: center;
+}
+
+.cta{
+  text-align: center !important;
+  padding: 10px !important;
+  min-width: 100px !important;
+  max-width: 100%;
+  font-weight: bold !important;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+  cursor: pointer !important;
+  background-color: transparent !important;
+  border: 1px solid $purpleThemeColor !important;
+  color: $purpleThemeColor !important;
+  transition: background-color 0.2s !important;
+}
+
+.secondary-cta{
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  font-weight: bold;
+  margin: 5px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid $purpleThemeColor;
+  color: $purpleThemeColor;
+  transition: background-color 0.2s;
+}
+
+.cta:hover, .secondary-cta:hover{
+  background-color: $lightenPurpleThemeColor !important;
+}
+
+.secondary-cta-colors{
+  color: $grey !important;
+  border-color: $grey !important;
+}
+
+.field{
+  border: 1px solid $lightGrey;
+  padding: 10px;
+  font-size: 16px;
+  transition: border 0.2s;
+}
+
+.field:focus{
+  border: 1px solid $purpleThemeColor;
+}
+
+.error-field{
+  border: 1px solid $redAlert !important;
+}
+
+.error-message{
+  text-align: center;
+  width: 100%;
+  color: $redAlert;
+  font-style: italic;
+}
+
+.ui.animated.button .hidden.content{
+  margin-top: -3em !important;
+}
+
+.ui.button{
+  cursor: default !important;
+}
+
+.w-0{
+  width: 0px !important;
+}
+
+.w-200{
+  width: 200px;
+}
+
+.t-left{
+  text-align: left;
+}
+
+.t-center{
+  text-align: center;
+}
+
+.t-right{
+  text-align: right;
+}
+
+.t-justify{
+  text-align: justify;
+}
+
+.deleted{
+  color: $grey;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.removed{
+  display: none;
+}
+
+hr{
+  height: 1px;
+  width: 100%;
+  background-color: $grey;
+}

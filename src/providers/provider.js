@@ -61,7 +61,10 @@ export const providers = {
         CHANGE_ITEM_TYPE_EDITION : "changeItemTypeEdition",
         CHANGE_ITEM_IS_DELETED : "changeItemIsDeleted",
         CHANGE_ITEM_VALUE : "changeItemValue",
-        SPLICE_LIST : "spliceList"
+        SPLICE_LIST : "spliceList",
+        CHANGE_ONLOAD_STATUS_SIGN_UP : "ChangeOnloadStatusSignUp",
+        SET_ERRORS_SIGN_UP : "setErrorsSignUp",
+        SET_USER_CREDENTIALS_SIGN_UP : "setUserCredentialsSignUp"
     },
     submit : {
         SIGN_UP : "/?action=SignUpFormSubmitted",

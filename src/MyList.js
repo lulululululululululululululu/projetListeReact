@@ -111,7 +111,7 @@ class MyList extends React.Component {
 
   }
 
-  error = async(element, elementType, errorType = null) => {
+  error = async(element, elementType) => {
     if (elementType === "field") {
       await this.props.dispatch({
         type: provider.providers.redux.ERROR_FIELD,

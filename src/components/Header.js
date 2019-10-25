@@ -10,7 +10,7 @@ validateSearchInSearchBar = (value) => {
 }
 
   render(){
-    if(this.props.isConnected){
+    if(!this.props.isConnected){
         return (
             <div className="header">
                 <div className="header-container flex space-between">

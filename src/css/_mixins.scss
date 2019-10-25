@@ -1,0 +1,11 @@
+@mixin box-shadow(){
+    -webkit-box-shadow: $mainBoxShadow;
+    -moz-box-shadow: $mainBoxShadow;
+    box-shadow: $mainBoxShadow;
+}
+
+@mixin background-options(){
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

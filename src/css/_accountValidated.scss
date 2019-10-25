@@ -1,0 +1,12 @@
+.block-validated-account{
+    margin: auto;
+    padding: 50px;
+    width: 1000px;
+    max-width: 100%;
+
+    & .account-validated-text{
+        margin: 50px;
+        text-align: center;
+        font-size: 25px;
+    }
+}

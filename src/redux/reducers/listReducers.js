@@ -5,7 +5,6 @@ const initialState = {
     items: [
     ],
     errorField : false,
-    searchBarHeaderOpen : false,
     isConnected : false
 };
 

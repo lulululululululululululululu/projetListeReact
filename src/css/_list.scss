@@ -1,0 +1,106 @@
+.block-list{
+  & .no-list{
+    width: 400px;
+    text-align: center;
+    padding: 20px;
+    font-size: 15px;
+    color: $lightGrey;
+  }
+
+  & .add{
+    width: 400px;
+    max-width: 100%;
+  
+    & .field-add{
+      min-width: 400px;
+      max-width: 400px;
+      height: 200px;
+    }
+  }
+
+  & .list{
+    width: 500px;
+    max-width: 100%;
+
+    & .item-list{
+        margin-bottom: 20px;
+      
+      & .cta-restore-delete-item{
+        margin: 20px 10px 20px 10px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        color: $grey;
+      }
+
+      & .item{
+        white-space: pre-line;
+        width: 470px;
+        font-size: 16px;
+        background-color: transparent;
+        border: none;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid $purpleThemeColor;
+        outline: none;
+        word-break: break-word;
+      }
+
+      & .item-options{
+        width: 30px;
+        min-height: 100px !important; 
+        padding: 0px !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        background-color: transparent !important;
+
+        & div{
+          margin-right: 0px !important;
+        
+          & i{
+            margin: 2px !important;
+          }
+        
+          & .trash{
+            color: $redAlert;
+          }
+        
+          & .pencil{
+            color: $purpleThemeColor;
+          }
+        
+          & .share{
+            color: $green;
+          }
+        }
+
+        & .content{
+          & .cta-option-item{
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+          }
+        }
+      }
+
+      & .creation-date-item{
+        width: calc(100% - 30px);
+      }
+
+      & div{
+        & .edit-textarea{
+          min-width: 470px;
+          max-width: 470px;
+          background-color: $veryLightGrey;
+        }
+      }
+    }
+
+    & .bloc-deleted-item{
+      & .creation-date-item-deleted{
+        width: 100%;
+      }
+    }
+  }
+}

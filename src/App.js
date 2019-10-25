@@ -9,9 +9,7 @@ import _ from 'lodash';
 import { AnimatedSwitch, spring} from 'react-router-transition';
 import 'moment-timezone';
 import * as provider from './providers/provider';
-import './css/list.css';
-import './css/header.css';
-import './css/signIn.css';
+import './css/index.css';
 import Header from './components/Header';
 
 class App extends React.Component{
