@@ -64,7 +64,8 @@ export const providers = {
         SPLICE_LIST : "spliceList",
         CHANGE_ONLOAD_STATUS_SIGN_UP : "ChangeOnloadStatusSignUp",
         SET_ERRORS_SIGN_UP : "setErrorsSignUp",
-        SET_USER_CREDENTIALS_SIGN_UP : "setUserCredentialsSignUp"
+        SET_USER_CREDENTIALS_SIGN_UP : "setUserCredentialsSignUp",
+        REDIRECT_SIGN_UP : "redirectSignUp"
     },
     submit : {
         SIGN_UP : "/?action=SignUpFormSubmitted",

@@ -187,8 +187,8 @@ class MyList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    errorField: state.errorField,
-    items: state.items
+    errorField: state.listReducer.errorField,
+    items: state.listReducer.items
   }
 }
 

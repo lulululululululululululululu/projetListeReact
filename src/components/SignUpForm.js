@@ -1,6 +1,6 @@
 import React from 'react'
 import * as provider from '../providers/provider';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import $ from 'jquery';
 import { connect } from "react-redux";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -8,22 +8,27 @@ import { Loader } from 'semantic-ui-react';
 
 class SignUpForm extends React.Component{
 
-   /* state = {
-        mail: "",
-        username: "",
-        password: "",
-        confirmPassword: "",
-        onLoad: false,
-        errors: []
-    }*/
+    setErrorUserAlreadyExists = () => {
+        if(this.props.errors.includes("userAlreadyExists")){
+            return(
+                <div className="enclosing-tag">
+                    <div className="error-message">
+                        Cet utilisateur existe déja
+                    </div>
+                </div>
+            )
+        }
+
+        return;
+    }
 
     setUsername = () => {
-        console.log(this.props);
         if(this.props.errors.includes("invalidUsername")){
             return(
                 <div className="enclosing-tag">
                     <input type="text"
                         id="username"
+                        value={this.props.username}
                         placeholder="Nom d'utilisateur"
                         className="error-field"
                         onChange={this.onChangeState}>
@@ -39,6 +44,7 @@ class SignUpForm extends React.Component{
         return(
             <input type="text"
                 id="username"
+                value={this.props.username}
                 placeholder="Nom d'utilisateur"
                 onChange={this.onChangeState}>
             </input>
@@ -46,11 +52,12 @@ class SignUpForm extends React.Component{
     }
 
     setMail = () => {
-        if(this.state.errors.includes("invalidMail")){
+        if(this.props.errors.includes("invalidMail")){
             return(
                 <div className="enclosing-tag">
                     <input type="mail"
                         id="mail"
+                        value={this.props.mail}
                         placeholder="E-mail"
                         className="error-field"
                         onChange={this.onChangeState}>
@@ -66,6 +73,7 @@ class SignUpForm extends React.Component{
         return(
             <input type="mail"
                 id="mail"
+                value={this.props.mail}
                 placeholder="E-mail"
                 onChange={this.onChangeState}>
             </input>
@@ -73,9 +81,30 @@ class SignUpForm extends React.Component{
     }
 
     setPassword = () => {
+        if(this.props.errors.includes("invalidPassword")){
+            return(
+                <div className="enclosing-tag">
+                    <input type="password"
+                        id="password"
+                        className="error-field"
+                        value={this.props.password}
+                        placeholder="Mot de passe"
+                        onChange={this.onChangeState}>
+                    </input>
+                    <div className="error-message">
+                        Le mot de passe n'est pas valide. Il doit :<br />
+                        - faire au moins 7 caractères<br />
+                        - contenir au moins une majuscule<br />
+                        - contenir au moins un numéro<br />
+                    </div>
+                </div>
+            )
+        }
+
         return(
             <input type="password"
                 id="password"
+                value={this.props.password}
                 placeholder="Mot de passe"
                 onChange={this.onChangeState}>
             </input>
@@ -83,9 +112,27 @@ class SignUpForm extends React.Component{
     }
 
     setConfirmPassword = () => {
+        if(this.props.errors.includes("invalidSamePasswords")){
+            return(
+                <div className="enclosing-tag">
+                    <input type="password"
+                        id="confirm-password"
+                        value={this.props.confirmPassword}
+                        className="error-field"
+                        placeholder="Confirmer le mot de passe"
+                        onChange={this.onChangeState}>
+                    </input>
+                    <div className="error-message">
+                        Les deux mots de passe ne sont pas identiques
+                    </div>
+                </div>
+            )
+        }
+
         return(
             <input type="password"
                 id="confirm-password"
+                value={this.props.confirmPassword}
                 placeholder="Confirmer le mot de passe"
                 onChange={this.onChangeState}>
             </input>
@@ -93,7 +140,7 @@ class SignUpForm extends React.Component{
     }
 
     setSubmitCta = () => {
-        let isLoading = this.state.onLoad;
+        let isLoading = this.props.onLoad;
 
         if(isLoading){
             return(
@@ -142,6 +189,10 @@ class SignUpForm extends React.Component{
         });
     }
 
+    redirect = () => {
+        
+    }
+
     handleSubmit = async(event) => {
         event.preventDefault();
         await this.props.dispatch({
@@ -149,24 +200,28 @@ class SignUpForm extends React.Component{
             onLoad: true
         })
         //this.forceUpdate();
-        let here = this;
-        await $.ajax({
-            url: provider.providers.const.API_PATH + provider.providers.submit.SIGN_UP,
-            type: "POST",
-            data: this.state,
-            success: async function(data){
-                let json = JSON.parse(data);
+        let datas = new FormData();
+        datas.append("parameters", JSON.stringify(this.props));
+        await fetch(provider.providers.const.API_PATH + provider.providers.submit.SIGN_UP,
+        {
+            method: "POST",
+            body: datas
+        }).then(response => response.json())
+        .then(async data => {
+            let json = JSON.parse(data);
+            await this.props.dispatch({
+                type: provider.providers.redux.SET_ERRORS_SIGN_UP,
+                errors: json.errors
+            })
+            if(this.props.errors.length === 0){
                 await this.props.dispatch({
-                    type: provider.providers.redux.SET_ERRORS_SIGN_UP,
-                    errors: json.errors
+                    type: provider.providers.redux.REDIRECT_SIGN_UP,
+                    redirect: true
                 })
-                console.log(here.state);
-                //await this.setState({error: false})
-            },
-            error: async function(data){
-                console.log(data);
-                //await this.setState({error: true})
             }
+        }).catch(function(error){
+            console.log(error);
+            //await this.setState({error: true})
         });
         await this.props.dispatch({
             type: provider.providers.redux.CHANGE_ONLOAD_STATUS_SIGN_UP,
@@ -175,9 +230,17 @@ class SignUpForm extends React.Component{
     }
 
     render(){
+        if(this.props.redirect){
+            this.props.dispatch({
+                type: provider.providers.redux.REDIRECT_SIGN_UP,
+                redirect: false
+            })
+            return <Redirect to={provider.providers.link.SIGN_IN} />
+        }
       return (
           <div className="sign-in-up-form flex column">
             <form method="post" className="flex column align-center" id="form-sign-up" onSubmit={this.handleSubmit}>
+                {this.setErrorUserAlreadyExists()}
                 {this.setUsername()}
                 {this.setMail()}
                 {this.setPassword()}
@@ -201,12 +264,12 @@ class SignUpForm extends React.Component{
 
   function mapStateToProps(state) {
     return {
-        mail: state.mail,
-        username: state.username,
-        password: state.password,
-        confirmPassword: state.confirmPassword,
-        onLoad: state.onLoad,
-        errors: state.errors
+        mail: state.signUpReducers.mail,
+        username: state.signUpReducers.username,
+        password: state.signUpReducers.password,
+        confirmPassword: state.signUpReducers.confirmPassword,
+        onLoad: state.signUpReducers.onLoad,
+        errors: state.signUpReducers.errors
     }
   }
   

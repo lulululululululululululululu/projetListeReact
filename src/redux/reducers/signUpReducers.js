@@ -6,7 +6,8 @@ const initialState = {
     password: "",
     confirmPassword: "",
     onLoad: false,
-    errors: []
+    errors: [],
+    redirect: false
 };
 
 export default function signUpReducers(state = initialState, action) {
@@ -28,6 +29,11 @@ export default function signUpReducers(state = initialState, action) {
             mail: action.mail,
             password: action.password,
             confirmPassword: action.confirmPassword
+          };
+      case provider.providers.redux.REDIRECT_SIGN_UP:
+          return {
+            ...state,
+            redirect: action.redirect
           };
       default:
           return state;
