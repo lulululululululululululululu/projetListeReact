@@ -1,6 +1,8 @@
 import React from 'react';
 import * as provider from './providers/provider';
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import * as language from './providers/lang/lang';
 
 class SignUpValidated extends React.Component{
 
@@ -8,8 +10,7 @@ class SignUpValidated extends React.Component{
       return (
         <div className="block-validated-account flex column align-center">
             <div className="account-validated-text">
-                Merci de votre inscription !<br/>
-                Votre compte a bien été validé, vous pouvez à présent vous connecter.
+                {language.lang[this.props.lang].THANKS_FOR_SIGN_UP_MESSAGE}
             </div>
             <Link to={provider.providers.link.SIGN_IN} className="cta">
                 Se connecter
@@ -19,4 +20,10 @@ class SignUpValidated extends React.Component{
     }
   }
   
-  export default SignUpValidated;
+  function mapStateToProps(state) {
+    return {
+      lang: state.mainReducers.lang
+    }
+  }
+  
+  export default connect(mapStateToProps)(SignUpValidated);

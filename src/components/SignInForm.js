@@ -1,6 +1,8 @@
 import React from 'react';
 import * as provider from '../providers/provider';
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import * as language from '../providers/lang/lang';
 
 class SignInForm extends React.Component{
 
@@ -9,24 +11,30 @@ class SignInForm extends React.Component{
           <div className="sign-in-up-form flex column">
             <form className="flex column align-center" id="form-sign-in">
                 <input type="text"
-                    placeholder="Nom d'utilisateur">
+                    placeholder={language.lang[this.props.lang].USERNAME}>
                 </input>
                 <input type="password"
-                    placeholder="Mot de passe">
+                    placeholder={language.lang[this.props.lang].PASSWORD}>
                 </input>
                 <input className="cta" type="submit"
-                    value="Se connecter">
+                    value={language.lang[this.props.lang].CONNECTION}>
                 </input>
             </form>
             <hr/>
-            <div className="or">Vous n'avez pas de compte ?...</div>
+            <div className="or">{language.lang[this.props.lang].NOT_SIGN_UP_ALREADY}</div>
             <hr/>
             <Link to={provider.providers.link.SIGN_UP} className="secondary-cta secondary-cta-colors link-sign-up">
-                 S'inscrire
+              {language.lang[this.props.lang].SIGN_UP}
             </Link>
           </div>
       );
     }
   }
   
-  export default SignInForm;
+  function mapStateToProps(state) {
+    return {
+      lang: state.mainReducers.lang
+    }
+  }
+  
+  export default connect(mapStateToProps)(SignInForm);

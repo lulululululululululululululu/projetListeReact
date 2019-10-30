@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Route
 } from "react-router-dom";
+import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import _ from 'lodash';
@@ -16,6 +17,12 @@ class App extends React.Component{
 
   constructor(props) {
     super(props);
+    let language = window.location.pathname.split('/')[1];
+    document.cookie = "language=" + language + "";
+    this.props.dispatch({
+      type: provider.providers.redux.LANG,
+      lang: language
+    })
   }
 
   mapStyles(styles) {
@@ -50,7 +57,7 @@ class App extends React.Component{
   render(){
     return(
       <Router>
-        <Header onClick={this.validateSearchInSearchBar}/>
+        <Header onClick={this.validateSearchInSearchBar} />
         <div id="main-container">
           <AnimatedSwitch
             atEnter={this.bounceTransition.atEnter}
@@ -59,7 +66,7 @@ class App extends React.Component{
             mapStyles={this.mapStyles}
             className="switch-wrapper">
             {provider.providers.routes.map(({ path, Component }) => (
-              <Route path={path} key={path} >
+              <Route path={'/' + provider.providers.lang + path} key={path} >
                 <Component />
               </Route>
             ))}
@@ -70,4 +77,10 @@ class App extends React.Component{
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    lang: state.mainReducers.lang
+  }
+}
+
+export default connect(mapStateToProps)(App);

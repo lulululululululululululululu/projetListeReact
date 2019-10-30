@@ -1,5 +1,6 @@
 import React from 'react';
-import * as provider from '../providers/provider';
+import { connect } from "react-redux";
+import * as language from '../providers/lang/lang';
 
 class DeletedItem extends React.Component{
 
@@ -17,7 +18,7 @@ class DeletedItem extends React.Component{
               type="button"
               className="cta-restore-delete-item"
               id={this.props.id}
-              value="Supprimer"
+              value={language.lang[this.props.lang].DELETE}
               data-type="delete"
               onClick={this.props.onClick}
           />
@@ -25,7 +26,7 @@ class DeletedItem extends React.Component{
               type="button"
               className="cta-restore-delete-item"
               id={this.props.id}
-              value="Restorer"
+              value={language.lang[this.props.lang].RESTORE}
               data-type="restore"
               onClick={this.props.onClick}
           />
@@ -35,4 +36,10 @@ class DeletedItem extends React.Component{
   }
 }
 
-export default DeletedItem;
+function mapStateToProps(state) {
+  return {
+    lang: state.mainReducers.lang
+  }
+}
+
+export default connect(mapStateToProps)(DeletedItem);

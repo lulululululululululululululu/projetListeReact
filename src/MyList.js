@@ -7,6 +7,7 @@ import AddToList from './components/AddToList';
 import Liste from './components/Liste';
 import 'moment-timezone';
 import { connect } from "react-redux";
+import * as language from './providers/lang/lang';
 const moment = require('moment');
 
 class MyList extends React.Component {
@@ -14,7 +15,7 @@ class MyList extends React.Component {
   setNoList = () => {
     return (
       <div className="no-list">
-        <h2>Votre liste est vide</h2>
+        <h2>{language.lang[this.props.lang].EMPTY_LIST}</h2>
       </div>
     )
   }
@@ -117,7 +118,7 @@ class MyList extends React.Component {
         type: provider.providers.redux.ERROR_FIELD,
         errorField: true
       })
-      $("#" + element.parent().attr("id") + " .error-message").html("Attention ce champ est vide ou contiens des caractères invalides")
+      $("#" + element.parent().attr("id") + " .error-message").html(language.lang[this.props.lang].ERROR_FIELD_EMPTY_OR_INVALID)
     }
   }
 
@@ -162,7 +163,7 @@ class MyList extends React.Component {
     } else {
       element.removeClass("error-field");
     }
-    let date = moment(new Date()).format(provider.providers.const.DATETIME_FORMAT);
+    let date = moment(new Date()).format(provider.providers.const[this.props.lang].DATETIME_FORMAT);
     let newItem = this.props.items;
     newItem.push({ key: newItem.length, value: value, isDeleted: false, isInEdition: false, creationDate: date })
     await this.props.dispatch({
@@ -175,7 +176,7 @@ class MyList extends React.Component {
   render() {
     return (
       <div id="main-container">
-        <Title value="Ma liste" />
+        <Title value={language.lang[this.props.lang].MY_LIST_TITLE} />
         <div className="block-list flex space-around">
           <AddToList onClick={this.addInList} />
           {this.setList()}
@@ -188,7 +189,8 @@ class MyList extends React.Component {
 function mapStateToProps(state) {
   return {
     errorField: state.listReducer.errorField,
-    items: state.listReducer.items
+    items: state.listReducer.items,
+    lang: state.mainReducers.lang
   }
 }
 

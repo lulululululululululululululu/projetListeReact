@@ -1,5 +1,6 @@
 import React from 'react'
 import * as provider from '../providers/provider';
+import * as language from '../providers/lang/lang';
 import { Link, Redirect } from "react-router-dom";
 import $ from 'jquery';
 import { connect } from "react-redux";
@@ -13,7 +14,7 @@ class SignUpForm extends React.Component{
             return(
                 <div className="enclosing-tag">
                     <div className="error-message">
-                        Cet utilisateur existe déja
+                        {language.lang[this.props.lang].USER_ALREADY_EXISTS}
                     </div>
                 </div>
             )
@@ -29,13 +30,12 @@ class SignUpForm extends React.Component{
                     <input type="text"
                         id="username"
                         value={this.props.username}
-                        placeholder="Nom d'utilisateur"
+                        placeholder={language.lang[this.props.lang].USERNAME}
                         className="error-field"
                         onChange={this.onChangeState}>
                     </input>
                     <div className="error-message">
-                        Le nom d'utilisateur est incorrect. 
-                        Il ne doit pas contenir de caractères spéciaux et doit faire en 2 et 50 caractères.
+                        {language.lang[this.props.lang].ERROR_USERNAME_FORMAT}
                     </div>
                 </div>
             )
@@ -45,7 +45,7 @@ class SignUpForm extends React.Component{
             <input type="text"
                 id="username"
                 value={this.props.username}
-                placeholder="Nom d'utilisateur"
+                placeholder={language.lang[this.props.lang].USERNAME}
                 onChange={this.onChangeState}>
             </input>
         )
@@ -58,13 +58,12 @@ class SignUpForm extends React.Component{
                     <input type="mail"
                         id="mail"
                         value={this.props.mail}
-                        placeholder="E-mail"
+                        placeholder={language.lang[this.props.lang].MAIL}
                         className="error-field"
                         onChange={this.onChangeState}>
                     </input>
                     <div className="error-message">
-                        Le mail est incorrect. 
-                        Il doit faire moins de 100 caractères.
+                        {language.lang[this.props.lang].ERROR_MAIL_FORMAT}
                     </div>
                 </div>
             )
@@ -74,7 +73,7 @@ class SignUpForm extends React.Component{
             <input type="mail"
                 id="mail"
                 value={this.props.mail}
-                placeholder="E-mail"
+                placeholder={language.lang[this.props.lang].MAIL}
                 onChange={this.onChangeState}>
             </input>
         )
@@ -88,14 +87,11 @@ class SignUpForm extends React.Component{
                         id="password"
                         className="error-field"
                         value={this.props.password}
-                        placeholder="Mot de passe"
+                        placeholder={language.lang[this.props.lang].PASSWORD}
                         onChange={this.onChangeState}>
                     </input>
                     <div className="error-message">
-                        Le mot de passe n'est pas valide. Il doit :<br />
-                        - faire au moins 7 caractères<br />
-                        - contenir au moins une majuscule<br />
-                        - contenir au moins un numéro<br />
+                        {language.lang[this.props.lang].ERROR_PASSWORD_FORMAT}
                     </div>
                 </div>
             )
@@ -105,7 +101,7 @@ class SignUpForm extends React.Component{
             <input type="password"
                 id="password"
                 value={this.props.password}
-                placeholder="Mot de passe"
+                placeholder={language.lang[this.props.lang].PASSWORD}
                 onChange={this.onChangeState}>
             </input>
         )
@@ -119,11 +115,11 @@ class SignUpForm extends React.Component{
                         id="confirm-password"
                         value={this.props.confirmPassword}
                         className="error-field"
-                        placeholder="Confirmer le mot de passe"
+                        placeholder={language.lang[this.props.lang].CONFIRM_PASSWORD}
                         onChange={this.onChangeState}>
                     </input>
                     <div className="error-message">
-                        Les deux mots de passe ne sont pas identiques
+                        {language.lang[this.props.lang].ERROR_CONFIRM_PASSWORD}
                     </div>
                 </div>
             )
@@ -133,7 +129,7 @@ class SignUpForm extends React.Component{
             <input type="password"
                 id="confirm-password"
                 value={this.props.confirmPassword}
-                placeholder="Confirmer le mot de passe"
+                placeholder={language.lang[this.props.lang].CONFIRM_PASSWORD}
                 onChange={this.onChangeState}>
             </input>
         )
@@ -152,7 +148,7 @@ class SignUpForm extends React.Component{
 
         return(
             <button className="cta" type="submit">
-                S'inscrire
+                {language.lang[this.props.lang].SIGN_UP}
             </button>
         );
     }
@@ -215,6 +211,13 @@ class SignUpForm extends React.Component{
             })
             if(this.props.errors.length === 0){
                 await this.props.dispatch({
+                    type: provider.providers.redux.SET_USER_CREDENTIALS_SIGN_UP,
+                    username: "",
+                    mail: "",
+                    password: "",
+                    confirmPassword: ""
+                })
+                await this.props.dispatch({
                     type: provider.providers.redux.REDIRECT_SIGN_UP,
                     redirect: true
                 })
@@ -252,10 +255,10 @@ class SignUpForm extends React.Component{
                 {this.setSubmitCta()}
             </form>
             <hr/>
-            <div className="or">Vous avez déja un compte ?...</div>
+            <div className="or">{language.lang[this.props.lang].SIGN_UP_ALREADY}</div>
             <hr/>
             <Link to={provider.providers.link.SIGN_IN} className="secondary-cta secondary-cta-colors link-sign-up">
-                 Se connecter
+                {language.lang[this.props.lang].CONNECTION}
             </Link>
           </div>
       );
@@ -269,7 +272,9 @@ class SignUpForm extends React.Component{
         password: state.signUpReducers.password,
         confirmPassword: state.signUpReducers.confirmPassword,
         onLoad: state.signUpReducers.onLoad,
-        errors: state.signUpReducers.errors
+        errors: state.signUpReducers.errors,
+        redirect: state.signUpReducers.redirect,
+        lang: state.mainReducers.lang
     }
   }
   

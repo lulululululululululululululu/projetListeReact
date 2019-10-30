@@ -6,23 +6,31 @@ import Friends from '../Friends';
 import Messages from '../Messages';
 import SignUpValidated from '../SignUpValidated';
 
+var LANG = window.location.pathname.split('/')[1];
+
 export const providers = {
     const : {
         SITE_PATH : "http://localhost:3000/",
         LOGO_PATH : "/assets/img/logos/logo.png",
         FIELD_REGEX_CHECK_INVALID_CARACTER : /((<script>)|(<\/script>))/g,
         FIELD_REGEX_CHECK_WHITE_SPACE : /\s/g,
-        DATETIME_FORMAT : "DD/MM/YYYY HH:mm",
         API_PATH : "http://localhost:8000/backReactlist/api",
-        CAPTCHA_SITE_KEY : "6Le6QL8UAAAAAFu6Sh31eBay2fv1s-CX4smkixcU"
+        CAPTCHA_SITE_KEY : "6Le6QL8UAAAAAFu6Sh31eBay2fv1s-CX4smkixcU",
+        fr : {
+            DATETIME_FORMAT : "DD/MM/YYYY HH:mm",
+        },
+        en : {
+            DATETIME_FORMAT : "MM/DD/YYYY HH:mm",
+        }
     },
+    lang : LANG,
     link : {
-        SIGN_IN: "/sign_in",
-        SIGN_UP: "/sign_up",
-        MY_LIST : "/my_list",
-        MY_MEDIAS : "/my_medias",
-        FRIENDS : "/friends",
-        MESSAGES : "/messages",
+        SIGN_IN: '/' + LANG + "/sign_in",
+        SIGN_UP: '/' + LANG + "/sign_up",
+        MY_LIST : '/' + LANG + "/my_list",
+        MY_MEDIAS : '/' + LANG + "/my_medias",
+        FRIENDS : '/' + LANG + "/friends",
+        MESSAGES : '/' + LANG + "/messages",
         CAPTCHA_CHECK : "https://www.google.com/recaptcha/api/siteverify"
     },
     routes : [
@@ -65,7 +73,9 @@ export const providers = {
         CHANGE_ONLOAD_STATUS_SIGN_UP : "ChangeOnloadStatusSignUp",
         SET_ERRORS_SIGN_UP : "setErrorsSignUp",
         SET_USER_CREDENTIALS_SIGN_UP : "setUserCredentialsSignUp",
-        REDIRECT_SIGN_UP : "redirectSignUp"
+        REDIRECT_SIGN_UP : "redirectSignUp",
+        REDIRECT : "redirect",
+        LANG : "changeLanguage"
     },
     submit : {
         SIGN_UP : "/?action=SignUpFormSubmitted",

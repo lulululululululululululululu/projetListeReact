@@ -50,6 +50,15 @@
                     color: $purpleThemeColor;
                 }
             }
+
+            & .box-select-language{
+                box-shadow: none !important;
+                border: none !important;
+
+                & div{
+                    color: $grey;
+                }
+            }
         }
 
         & .href-logo{

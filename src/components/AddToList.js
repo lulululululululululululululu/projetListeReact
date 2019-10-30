@@ -1,5 +1,6 @@
 import React from 'react';
-import * as provider from '../providers/provider';
+import { connect } from "react-redux";
+import * as language from '../providers/lang/lang';
 
 class AddToList extends React.Component{
 
@@ -7,19 +8,25 @@ class AddToList extends React.Component{
     return (
         <div className="add flex column align-center" id="block-add-to-list">
             <textarea
-            type="text"
-            className="field-add field"
-            placeholder="Que voulez vous ajouter à la liste ?">
+              type="text"
+              className="field-add field"
+              placeholder={language.lang[this.props.lang].PLACEHOLDER_ADD_TO_LIST}>
             </textarea>
             <div className="error-message"></div>
             <input 
-            type="button"
-            className="cta"
-            value="Ajouter"
-            onClick={this.props.onClick}/>
+              type="button"
+              className="cta"
+              value={language.lang[this.props.lang].ADD}
+              onClick={this.props.onClick}/>
         </div>
     );
   }
 }
 
-export default AddToList;
+function mapStateToProps(state) {
+  return {
+    lang: state.mainReducers.lang
+  }
+}
+
+export default connect(mapStateToProps)(AddToList);
